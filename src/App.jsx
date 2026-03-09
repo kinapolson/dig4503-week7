@@ -1,22 +1,12 @@
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Features from './components/Features'
-import HowItWorks from './components/HowItWorks'
-import CTA from './components/CTA'
-import Footer from './components/Footer'
 import './index.css'
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Features />
-        <HowItWorks />
-        <CTA />
-      </main>
-      <Footer />
-    </>
+    <div className="page">
+      <header>
+        <h1>F1 Race Tracker</h1>
+        <p>Track race results, save your favorite drivers, rate races, add notes, and filter by season.</p>
+      </header>
+    </div>
   )
 }
