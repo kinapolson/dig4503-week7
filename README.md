@@ -1,16 +1,18 @@
-# React + Vite
+Project Name: F1 Race Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description: This React website is designed for Formula 1 fans to track and organize their race watches. Users will be able to save their favorite teams and drivers, log race results, rate races, add notes about each race, and have a community space to chat about the races.
 
-Currently, two official plugins are available:
+Features:
+- Save Favorite Teams and Drivers: Users can manage a list of teams and drivers they want to follow.
+- Track Race Results: Users can log races they have and watched and note the results.
+- Race Notes: Users can jot their personal notes about the race, key features, and other commments they'd like to add.
+- Filter: Users can filter their races by season.
+- Community Board: Users can befriend other users and talk about races on a community board.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Tech Stack:
+- React
+- HTML/CSS/JavaScript
+- GitHub
+- Netlify
+- Claude
+- localStorage -> real database (MongDB)
