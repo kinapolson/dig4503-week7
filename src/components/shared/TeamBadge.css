@@ -1,0 +1,39 @@
+.team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-left: 4px solid;   /* color set inline */
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.team-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.team-name {
+  font-weight: 600;
+}
+
+.badge-remove {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.1rem;
+  margin-left: 0.25rem;
+  transition: color 0.15s;
+}
+
+.badge-remove:hover {
+  color: #e55;
+}

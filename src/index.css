@@ -7,32 +7,18 @@
 body {
   background: #111;
   color: #fff;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.5;
 }
 
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem;
+h1, h2, h3 {
+  line-height: 1.2;
 }
 
-header {
-  text-align: center;
-  border: 2px solid #e50000;
-  padding: 2rem 3rem;
-  max-width: 500px;
+a {
+  color: inherit;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #e50000;
-  margin-bottom: 1rem;
-}
-
-p {
-  font-size: 1rem;
-  color: #ccc;
-  line-height: 1.6;
+button {
+  font-family: inherit;
 }
