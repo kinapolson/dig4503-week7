@@ -90,6 +90,17 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {teams.length > 0 && (
+        <div className="section">
+          <h2>Favorite Teams</h2>
+          <div className="home-driver-list">
+            {teams.map(t => (
+              <span key={t.id} className="home-driver-chip">{t.name}</span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
