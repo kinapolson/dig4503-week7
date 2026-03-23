@@ -8,9 +8,11 @@ const CURRENT_YEAR = new Date().getFullYear()
 
 const EMPTY_FORM = {
   raceName: '',
-  season: CURRENT_YEAR,
-  notes: '',
-  rating: 0,
+  circuit:  '',
+  season:   CURRENT_YEAR,
+  date:     '',
+  notes:    '',
+  rating:   0,
 }
 
 function validate(fields) {
@@ -55,10 +57,11 @@ export default function LogRaceForm() {
 
     addRace({
       raceName: fields.raceName.trim(),
-      season: fields.season,
-      notes: fields.notes.trim(),
-      rating: fields.rating,
-      // Remaining race fields (circuit, round, date, etc.) added in a later iteration
+      circuit:  fields.circuit.trim(),
+      season:   fields.season,
+      date:     fields.date || new Date().toISOString(),
+      notes:    fields.notes.trim(),
+      rating:   fields.rating,
     })
 
     setSubmitted(true)
@@ -102,6 +105,20 @@ export default function LogRaceForm() {
         {errors.raceName && <p className="error-msg">{errors.raceName}</p>}
       </div>
 
+      {/* Circuit */}
+      <div className="form-group">
+        <label htmlFor="circuit">Circuit <span className="optional">(optional)</span></label>
+        <input
+          id="circuit"
+          name="circuit"
+          type="text"
+          placeholder="e.g. Circuit de Monaco"
+          value={fields.circuit}
+          onChange={handleChange}
+          autoComplete="off"
+        />
+      </div>
+
       {/* Season */}
       <div className={`form-group ${errors.season ? 'has-error' : ''}`}>
         <label htmlFor="season">Season <span className="required">*</span></label>
@@ -115,6 +132,19 @@ export default function LogRaceForm() {
           onChange={handleChange}
         />
         {errors.season && <p className="error-msg">{errors.season}</p>}
+      </div>
+
+      {/* Race Date */}
+      <div className="form-group">
+        <label htmlFor="date">Race Date <span className="optional">(optional)</span></label>
+        <input
+          id="date"
+          name="date"
+          type="date"
+          value={fields.date}
+          onChange={handleChange}
+          max={new Date().toISOString().split('T')[0]}
+        />
       </div>
 
       {/* Star Rating */}

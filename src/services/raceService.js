@@ -30,7 +30,11 @@ function writeStorage(races) {
  * @returns {Race[]}
  */
 export function getRaces() {
-  return readStorage().sort((a, b) => new Date(b.date) - new Date(a.date))
+  return readStorage().sort((a, b) => {
+    const dateA = a.date ? new Date(a.date) : new Date(a.createdAt)
+    const dateB = b.date ? new Date(b.date) : new Date(b.createdAt)
+    return dateB - dateA
+  })
 }
 
 /**

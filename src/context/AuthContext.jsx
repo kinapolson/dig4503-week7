@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser ?? false)
+      setUser(firebaseUser ?? null)
       setAuthReady(true)
     })
     return unsubscribe
