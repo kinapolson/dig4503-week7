@@ -73,6 +73,37 @@
   margin-top: 0.5rem;
 }
 
+/* Clickable stat card variant */
+.card-btn {
+  cursor: pointer;
+  border: 1px solid #2a2a2a;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.card-btn:hover {
+  border-color: #e50000;
+  background: #1f1414;
+}
+
+.card-disabled {
+  cursor: default;
+}
+
+.card-disabled:hover {
+  border-color: #2a2a2a;
+  background: #1a1a1a;
+}
+
+.card-hint {
+  display: block;
+  font-size: 0.7rem;
+  color: #e50000;
+  margin-top: 0.5rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /* Section spacing */
 .section {
   display: flex;
