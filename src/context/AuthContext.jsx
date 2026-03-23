@@ -5,49 +5,89 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  updateEmail,
+  updatePassword,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from 'firebase/auth'
-import { auth } from '../firebase'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { auth, storage } from '../firebase'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  // null  = not yet checked (Firebase still resolving session)
-  // false = checked, no user logged in
-  // object = checked, user is logged in
-  const [user, setUser] = useState(null)
+  const [user, setUser]         = useState(null)
   const [authReady, setAuthReady] = useState(false)
 
   useEffect(() => {
-    // onAuthStateChanged fires once immediately with the persisted session
-    // (or null), then again on every login/logout. Firebase handles
-    // session persistence automatically via IndexedDB.
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser ?? false)
       setAuthReady(true)
     })
-    return unsubscribe  // cleans up the listener on unmount
+    return unsubscribe
   }, [])
+
+  // --- Registration / login / logout ---
 
   async function register(email, password, username) {
     const credential = await createUserWithEmailAndPassword(auth, email, password)
-    // Store the username as the Firebase displayName
     await updateProfile(credential.user, { displayName: username })
-    // Refresh local user object so displayName is immediately available
     setUser({ ...credential.user, displayName: username })
   }
 
   async function login(email, password) {
     await signInWithEmailAndPassword(auth, email, password)
-    // onAuthStateChanged will update user state automatically
   }
 
   async function logout() {
     await signOut(auth)
-    // onAuthStateChanged will set user to false automatically
+  }
+
+  // --- Profile updates ---
+
+  async function updateUsername(displayName) {
+    await updateProfile(auth.currentUser, { displayName })
+    setUser(u => ({ ...u, displayName }))
+  }
+
+  // Email and password changes require recent authentication.
+  // The caller must provide the user's current password so we can re-authenticate first.
+  async function updateUserEmail(newEmail, currentPassword) {
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPassword)
+    await reauthenticateWithCredential(auth.currentUser, credential)
+    await updateEmail(auth.currentUser, newEmail)
+    setUser(u => ({ ...u, email: newEmail }))
+  }
+
+  async function updateUserPassword(currentPassword, newPassword) {
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPassword)
+    await reauthenticateWithCredential(auth.currentUser, credential)
+    await updatePassword(auth.currentUser, newPassword)
+  }
+
+  async function uploadProfilePhoto(file) {
+    const storageRef = ref(storage, `profileImages/${auth.currentUser.uid}`)
+    await uploadBytes(storageRef, file)
+    const photoURL = await getDownloadURL(storageRef)
+    await updateProfile(auth.currentUser, { photoURL })
+    setUser(u => ({ ...u, photoURL }))
+    return photoURL
+  }
+
+  async function deleteAccount(currentPassword) {
+    const credential = EmailAuthProvider.credential(auth.currentUser.email, currentPassword)
+    await reauthenticateWithCredential(auth.currentUser, credential)
+    await deleteUser(auth.currentUser)
   }
 
   return (
-    <AuthContext.Provider value={{ user, authReady, register, login, logout }}>
+    <AuthContext.Provider value={{
+      user, authReady,
+      register, login, logout,
+      updateUsername, updateUserEmail, updateUserPassword,
+      uploadProfilePhoto, deleteAccount,
+    }}>
       {children}
     </AuthContext.Provider>
   )

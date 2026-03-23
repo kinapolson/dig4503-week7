@@ -8,6 +8,7 @@ import Favorites from './pages/Favorites'
 import Community from './pages/Community'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Profile from './pages/Profile'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="log"       element={<ProtectedRoute><LogRace /></ProtectedRoute>} />
           <Route path="favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
           <Route path="community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
+          <Route path="profile"   element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>

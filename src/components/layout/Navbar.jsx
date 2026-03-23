@@ -19,6 +19,10 @@ export default function Navbar() {
     navigate('/login')
   }
 
+  const initials = user?.displayName
+    ? user.displayName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+    : user?.email?.[0]?.toUpperCase()
+
   return (
     <nav className="navbar">
       <NavLink to="/" className="navbar-brand">
@@ -42,7 +46,12 @@ export default function Navbar() {
       <div className="navbar-auth">
         {user ? (
           <>
-            <span className="navbar-username">{user.displayName || user.email}</span>
+            <NavLink to="/profile" className="navbar-avatar" title="My Profile">
+              {user.photoURL
+                ? <img src={user.photoURL} alt="Profile" className="navbar-avatar-img" />
+                : <span className="navbar-avatar-initials">{initials}</span>
+              }
+            </NavLink>
             <button className="btn-logout" onClick={handleLogout}>Logout</button>
           </>
         ) : (
