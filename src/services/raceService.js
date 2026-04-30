@@ -47,7 +47,7 @@ export function addRace(raceData) {
   const duplicate = races.some(
     r =>
       r.raceName.trim().toLowerCase() === raceData.raceName.trim().toLowerCase() &&
-      r.season === raceData.season
+      Number(r.season) === Number(raceData.season)
   )
   if (duplicate) return null
   const newRace = {
