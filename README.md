@@ -16,3 +16,5 @@ Tech Stack:
 - Netlify
 - Claude
 - localStorage -> real database (MongDB)
+
+Update (4.29.2026): Resolved Duplicate Logged Race Issue + Past History Showing up on Home Screen
