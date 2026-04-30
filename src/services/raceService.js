@@ -44,6 +44,12 @@ export function getRaces() {
  */
 export function addRace(raceData) {
   const races = readStorage()
+  const duplicate = races.some(
+    r =>
+      r.raceName.trim().toLowerCase() === raceData.raceName.trim().toLowerCase() &&
+      r.season === raceData.season
+  )
+  if (duplicate) return null
   const newRace = {
     ...raceData,
     id: crypto.randomUUID(),

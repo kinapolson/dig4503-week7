@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addRace } from '../../services/raceService'
 import StarRating from './StarRating'
@@ -34,6 +34,7 @@ export default function LogRaceForm() {
   const [fields, setFields] = useState(EMPTY_FORM)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const submittingRef = useRef(false)
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -49,13 +50,15 @@ export default function LogRaceForm() {
 
   function handleSubmit(e) {
     e.preventDefault()
+    if (submittingRef.current) return
     const validationErrors = validate(fields)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
     }
 
-    addRace({
+    submittingRef.current = true
+    const added = addRace({
       raceName: fields.raceName.trim(),
       circuit:  fields.circuit.trim(),
       season:   fields.season,
@@ -63,6 +66,12 @@ export default function LogRaceForm() {
       notes:    fields.notes.trim(),
       rating:   fields.rating,
     })
+    submittingRef.current = false
+
+    if (!added) {
+      setErrors({ raceName: `"${fields.raceName.trim()}" has already been logged for the ${fields.season} season.` })
+      return
+    }
 
     setSubmitted(true)
   }

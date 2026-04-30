@@ -18,10 +18,16 @@ export default function Home() {
   const [modal, setModal]     = useState(null) // 'races' | 'ratings' | null
 
   useEffect(() => {
+    if (!user) {
+      setRaces([])
+      setDrivers([])
+      setTeams([])
+      return
+    }
     setRaces(getRaces())
     setDrivers(getFavoriteDrivers())
     setTeams(getFavoriteTeams())
-  }, [])
+  }, [user])
 
   const avgRating     = races.length > 0
     ? (races.reduce((sum, r) => sum + r.rating, 0) / races.length).toFixed(1)
